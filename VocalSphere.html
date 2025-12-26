@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VocalSphere OS | Welcome</title>
+    <style>
+        :root {
+            --current-color: #00f2ff;
+            --current-size: 150px;
+            --accent: #10b981;
+        }
+        body {
+            background: #020617;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* PAGE SYSTEM */
+        .page {
+            display: none; 
+            height: 100vh;
+            width: 100vw;
+            animation: fadeIn 0.6s ease;
+        }
+        .active-page { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* WELCOME PAGE STYLING */
+        #welcome-page {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #00f2ff, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* DASHBOARD LAYOUT */
+        #dashboard-page {
+            display: none; /* Controlled by JS */
+            grid-template-columns: 320px 1fr;
+        }
+
+        /* SIDEBAR & VIEWPORT (From previous version) */
+        #sidebar { background: #0f172a; border-right: 1px solid #1e293b; display: flex; flex-direction: column; padding: 20px; }
+        #history-log { flex-grow: 1; overflow-y: auto; font-family: monospace; font-size: 0.8rem; color: #94a3b8; }
+        #viewport { flex-grow: 1; display: flex; flex-direction: column; }
+        header { padding: 20px; display: flex; justify-content: space-between; background: rgba(0,0,0,0.3); }
+        
+        #magic-object {
+            width: var(--current-size);
+            height: var(--current-size);
+            background-color: var(--current-color);
+            box-shadow: 0 0 60px var(--current-color);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin: auto;
+        }
+
+        /* SHAPES & ACTIONS */
+        .circle { border-radius: 50%; }
+        .square { border-radius: 4px; }
+        .triangle { clip-path: polygon(50% 0%, 0% 100%, 100% 100%); }
+        .diamond { transform: rotate(45deg); border-radius: 0%; }
+        .jump { animation: jump-act 0.5s ease; }
+        @keyframes jump-act { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-120px); } }
+
+        /* BUTTONS */
+        .btn { padding: 15px 35px; border-radius: 12px; font-weight: bold; cursor: pointer; border: none; transition: 0.3s; }
+        .btn-primary { background: var(--accent); color: white; font-size: 1.1rem; }
+        .btn-primary:hover { box-shadow: 0 0 20px var(--accent); }
+        #start-btn { background: #10b981; color: white; }
+        #stop-btn { background: #ef4444; color: white; display: none; }
+    </style>
+</head>
+<body>
+
+    <div id="welcome-page" class="page active-page">
+        <h1 class="hero-title">VOCALSPHERE</h1>
+        <p style="color: #94a3b8; margin-bottom: 40px;">The Next Generation Voice-Controlled Transformation Engine</p>
+        <button class="btn btn-primary" onclick="navigateTo('dashboard-page')">INITIALIZE SYSTEM</button>
+    </div>
+
+    <div id="dashboard-page" class="page" style="display: none;">
+        <div id="sidebar">
+            <h3>System Log</h3>
+            <div id="history-log"></div>
+            <button id="save-btn" class="btn" style="background:#334155; color:white; margin-top:10px;">Download Log</button>
+        </div>
+
+        <div id="viewport">
+            <header>
+                <div>LAB // <b>STATION_01</b></div>
+                <div id="status-indicator" style="padding:5px 15px; border-radius:20px; background:#1e293b; font-size:0.7rem;">ENGINE: STANDBY</div>
+            </header>
+
+            <div id="magic-object" class="circle"></div>
+
+            <footer style="padding: 40px; display: flex; justify-content: center; gap: 20px;">
+                <button id="start-btn" class="btn">START LISTENING</button>
+                <button id="stop-btn" class="btn">STOP SYSTEM</button>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // NAVIGATION LOGIC
+        function navigateTo(pageId) {
+            document.querySelectorAll('.page').forEach(p => {
+                p.style.display = 'none';
+                p.classList.remove('active-page');
+            });
+            const next = document.getElementById(pageId);
+            next.style.display = (pageId === 'dashboard-page') ? 'grid' : 'flex';
+            setTimeout(() => next.classList.add('active-page'), 10);
+        }
+
+        // SPEECH ENGINE LOGIC
+        const object = document.getElementById('magic-object');
+        const log = document.getElementById('history-log');
+        const startBtn = document.getElementById('start-btn');
+        const stopBtn = document.getElementById('stop-btn');
+        const status = document.getElementById('status-indicator');
+
+        const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
+        const recognition = new SpeechRecognition();
+        recognition.continuous = true;
+
+        const colors = ["red", "blue", "green", "yellow", "purple", "orange", "pink", "white", "cyan", "lime", "gold"];
+
+        function addLog(msg) {
+            const div = document.createElement('div');
+            div.style.padding = "5px 0";
+            div.innerHTML = `<span style="color:#4ade80">>></span> ${msg}`;
+            log.prepend(div);
+        }
+
+        recognition.onresult = (event) => {
+            const transcript = event.results[event.results.length - 1][0].transcript.toLowerCase();
+            addLog(`Input: ${transcript}`);
+
+            // Color Processing
+            colors.forEach(c => {
+                if(transcript.includes(c)) {
+                    document.documentElement.style.setProperty('--current-color', c);
+                }
+            });
+
+            // Shape Processing
+            if (transcript.includes("square")) object.className = "square";
+            else if (transcript.includes("circle")) object.className = "circle";
+            else if (transcript.includes("triangle")) object.className = "triangle";
+            else if (transcript.includes("diamond")) object.className = "diamond";
+
+            // Size Processing
+            if (transcript.includes("big")) document.documentElement.style.setProperty('--current-size', "300px");
+            else if (transcript.includes("small")) document.documentElement.style.setProperty('--current-size', "60px");
+
+            // Activity
+            if (transcript.includes("jump")) {
+                object.classList.add('jump');
+                setTimeout(() => object.classList.remove('jump'), 500);
+            }
+        };
+
+        startBtn.onclick = () => {
+            recognition.start();
+            status.innerText = "ENGINE: LISTENING";
+            status.style.background = "#10b981";
+            startBtn.style.display = "none";
+            stopBtn.style.display = "block";
+            addLog("Voice Core Online");
+        };
+
+        stopBtn.onclick = () => {
+            recognition.stop();
+            status.innerText = "ENGINE: STANDBY";
+            status.style.background = "#1e293b";
+            stopBtn.style.display = "none";
+            startBtn.style.display = "block";
+        };
+    </script>
+</body>
+</html>
