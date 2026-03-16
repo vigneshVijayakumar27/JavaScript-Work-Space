@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website QR Code</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .qr-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        #qrcode {
+            margin: 20px 0;
+        }
+        h2 { color: #333; }
+        p { color: #666; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+    <div class="qr-container">
+        <h2>Scan My Website</h2>
+        <p>எங்கள் தளத்தைப் பார்க்க ஸ்கேன் செய்யவும்</p>
+        
+        <div id="qrcode"></div>
+        
+        <p id="link-text" style="font-weight: bold; color: #007bff;"></p>
+    </div>
+
+    <script>
+        // உங்கள் டொமைன் லிங்க்-ஐ இங்கே மாற்றவும்
+        const myWebsiteURL = "file:///C:/Users/Vignish%20v/Desktop/QR.html"; 
+
+        // QR Code உருவாக்கும் லாஜிக்
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+            text: myWebsiteURL,
+            width: 200,
+            height: 200,
+            colorDark : "#000000",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H    
+        });
+
+        // லிங்க்-ஐ திரையில் காட்ட
+        document.getElementById("link-text").innerText = myWebsiteURL;
+    </script>
+
+</body>
+</html>
