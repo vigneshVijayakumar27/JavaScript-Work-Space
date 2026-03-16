@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vicky Adorners | Premium Event Services Salem</title>
+    <style>
+        :root {
+            --primary-red: #b30000;
+            --accent-yellow: #ffcc00;
+            --dark-blue: #0038a8;
+            --white: #ffffff;
+            --text-gray: #444;
+        }
+
+        * { box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background: #fff; color: var(--text-gray); scroll-behavior: smooth; }
+
+        /* Navigation Bar */
+        nav {
+            background: var(--white);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo { font-weight: bold; color: var(--primary-red); font-size: 1.5rem; text-decoration: none; }
+        .nav-links a { text-decoration: none; color: var(--text-gray); margin-left: 20px; font-weight: 600; font-size: 0.9rem; }
+
+        /* Hero Section */
+        .hero {
+            height: 70vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 { font-size: 2.5rem; margin: 0; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .hero p { font-size: 1rem; background: var(--accent-yellow); color: #000; padding: 5px 15px; display: inline-block; margin-top: 10px; font-weight: bold; border-radius: 4px; }
+
+        /* Inspiration Section */
+        .inspiration {
+            padding: 60px 10%;
+            text-align: center;
+            background: #fdfdfd;
+        }
+        .kalam-img { width: 120px; border-radius: 50%; border: 4px solid var(--accent-yellow); margin-bottom: 20px; }
+        .quote { font-style: italic; font-size: 1.2rem; color: var(--dark-blue); max-width: 700px; margin: 0 auto; line-height: 1.6; }
+
+        /* Active A to Z Services Grid */
+        .services { padding: 60px 10%; background: #f9f9f9; }
+        .section-title { text-align: center; margin-bottom: 40px; }
+        .section-title h2 { color: var(--primary-red); font-size: 1.8rem; text-transform: uppercase; margin-bottom: 5px; }
+        .section-title .underline { width: 60px; height: 4px; background: var(--accent-yellow); margin: 0 auto; }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .service-item {
+            background: #fff;
+            border: 1px solid #eee;
+            padding: 40px 30px;
+            text-align: center;
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Smooth Jump effect */
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        /* The "Jump" and Glower effect on Hover/Touch */
+        .service-item:hover, .service-item:active {
+            transform: translateY(-15px); /* Jumps up */
+            border-color: var(--accent-yellow);
+            box-shadow: 0 15px 30px rgba(179, 0, 0, 0.15);
+        }
+
+        .service-item h3 { color: var(--primary-red); margin-bottom: 10px; font-size: 1.4rem; transition: 0.3s; }
+        .service-item:hover h3 { color: var(--dark-blue); }
+
+        /* Gallery Section */
+        .gallery { padding: 60px 10%; }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .gallery-item {
+            width: 100%;
+            height: 200px;
+            background: #eee;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 3px solid transparent;
+            transition: 0.3s;
+        }
+        .gallery-item:hover { border-color: var(--primary-red); transform: scale(1.03); }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Action Buttons */
+        .action-container { margin-top: 25px; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+        
+        .btn {
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 25px;
+            width: 100%;
+            max-width: 320px;
+            transition: 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .whatsapp { background: #25d366; color: white; }
+        .call { background: var(--primary-red); color: white; }
+        .map { background: var(--dark-blue); color: white; }
+        
+        .btn:active { transform: scale(0.95); } /* Clicks inward when touched */
+
+        /* Footer */
+        footer {
+            background: #222;
+            color: white;
+            padding: 50px 10%;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.8rem; }
+            nav { padding: 10px; flex-direction: column; }
+            .nav-links { margin-top: 10px; }
+            .nav-links a { margin: 0 8px; font-size: 0.8rem; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="logo">VICKY ADORNERS</a>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>விக்கி அடார்னர்ஸ் & டெக்கரேஷன்</h1>
+        <p>A to Z Service - Salem District</p>
+    </section>
+
+    <section id="about" class="inspiration">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/A._P._J._Abdul_Kalam_in_2008.jpg" alt="Kalam" class="kalam-img">
+        <div class="quote">
+            "உன்னால் முடியும் என்று உன்னை நீ நம்பு..."<br>
+            "Dream is not that which you see while sleeping, it is something that does not let you sleep."
+        </div>
+        <p style="margin-top: 20px; font-size: 0.95rem; opacity: 0.8;">
+            Inspired by Dr. A.P.J. Abdul Kalam, we provide excellence in every event in Salem.
+        </p>
+    </section>
+
+    <section id="services" class="services">
+        <div class="section-title">
+            <h2>Our Services</h2>
+            <div class="underline"></div>
+        </div>
+        <div class="service-grid">
+            <div class="service-item">
+                <h3>Pandals / பந்தல்</h3>
+                <p>Shamiana & Modern Jhummar Pandals for grand events.</p>
+            </div>
+            <div class="service-item">
+                <h3>Decoration / அலங்காரம்</h3>
+                <p>Stage Floral Works & Serial Light Settings.</p>
+            </div>
+            <div class="service-item">
+                <h3>Rental Items / வாடகை</h3>
+                <p>Chairs, Tables, & Professional Cooking Utensils.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="gallery">
+        <div class="section-title">
+            <h2>Recent Work Gallery</h2>
+            <div class="underline"></div>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="F:\Portfolio\WhatsApp Image 2026-03-16 at 6.50.21 PM.jpeg" alt="Work 1"></div>
+            <div class="gallery-item"><img src="F:\Portfolio\WhatsApp Image 2026-03-16 at 6.50.19 PM.jpeg" alt="Work 2"></div>
+            <div class="gallery-item"><img src="F:\Portfolio\WhatsApp Image 2026-03-16 at 6.50.20 PM.jpeg" alt="Work 3"></div>
+            <div class="gallery-item"><img src="F:\Portfolio\WhatsApp Image 2026-03-16 at 6.50.19 PM (1).jpeg" alt="Work 4"></div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <h2>Book Now / விசாரிக்க</h2>
+        <div class="action-container">
+            <a href="tel:+919952856424" class="btn call">📞 Call 99528 56424</a>
+            
+            <a href="https://wa.me/919952856424" class="btn whatsapp">💬 WhatsApp Message</a>
+            
+            <a href="https://www.google.com/maps/place/Vicky+Adorners/@11.6150247,78.1203198,15z/data=!4m9!1m2!2m1!1sThammanayakkanpatti+Salem!3m5!1s0x3babef000c989d0f:0xfe2ce10711a2d0cf!8m2!3d11.6101438!4d78.1296325!16s%2Fg%2F11ynvnpfw9?entry=ttu&g_ep=EgoyMDI2MDMxMS4wIKXMDSoASAFQAw%3D%3D" class="btn map">📍 GPS Location (Shop)</a>
+        </div>
+        
+        <div style="margin-top: 35px; border-top: 1px solid #444; padding-top: 20px;">
+            <strong>M. Vijayakumar</strong><br>
+            📍 Thammanayakkanpatti, Salem - 636 201.
+            <br>
+            📍 Nalikkalpatti, Salem - 636 201.
+        </div>
+        <p style="margin-top: 30px; font-size: 0.7rem; opacity: 0.5;">© 2026 Vicky Adorners. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html> 
